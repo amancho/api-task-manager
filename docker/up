@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+docker build docker/images/php-fpm -t api-task-manager.php-fpm
+
+docker-compose up -d

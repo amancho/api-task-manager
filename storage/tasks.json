@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "title": "Clean up",
+    "created_at": "2023-02-01 10:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 2,
+    "title": "Visit the doctor",
+    "created_at": "2023-02-02 11:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 3,
+    "title": "Call to Mummy",
+    "created_at": "2023-02-03 12:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 4,
+    "title": "Go to the gym",
+    "created_at": "2023-02-04 13:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 5,
+    "title": "Buy lottery tickets",
+    "created_at": "2023-02-05 14:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 6,
+    "title": "Visit the dentist",
+    "created_at": "2023-02-06 15:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  },
+  {
+    "id": 7,
+    "title": "Do the laundry",
+    "created_at": "2023-02-07 16:00:00",
+    "updated_at": null,
+    "status": "PENDING"
+  }
+]
