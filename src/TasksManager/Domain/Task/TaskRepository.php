@@ -2,8 +2,11 @@
 
 namespace Tappx\Tasks\TasksManager\Domain\Task;
 
-use Tappx\Tasks\Shared\Domain\Error\InvalidCollectionItemType;
+use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskId;
 use Tappx\Tasks\TasksManager\Infrastructure\Storage\Error\FileNotFound;
+use Tappx\Tasks\TasksManager\Infrastructure\Storage\Error\TaskNotFound;
+use Tappx\Tasks\Shared\Domain\Error\InvalidCollectionItemType;
+
 
 interface TaskRepository
 {
@@ -12,4 +15,10 @@ interface TaskRepository
      * @throws FileNotFound
      */
     public function list(): TaskCollection;
+
+    /**
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function searchById(TaskId $taskId): Task;
 }

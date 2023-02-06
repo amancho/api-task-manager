@@ -6,12 +6,9 @@ use Tappx\Tasks\Shared\Domain\Error\InvalidCollectionItemType;
 use Tappx\Tasks\TasksManager\Domain\Task\Task;
 use Tappx\Tasks\TasksManager\Domain\Task\TaskCollection;
 use Tappx\Tasks\TasksManager\Domain\Task\TaskRepository;
-use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskCreatedAt;
 use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskId;
-use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskStatus;
-use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskTitle;
-use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskUpdatedAt;
 use Tappx\Tasks\TasksManager\Infrastructure\Storage\Error\FileNotFound;
+use Tappx\Tasks\TasksManager\Infrastructure\Storage\Error\TaskNotFound;
 
 final class TaskFileRepository implements TaskRepository
 {
@@ -48,9 +45,31 @@ final class TaskFileRepository implements TaskRepository
             $fileContent = \file_get_contents($this->filePath);
             $fileTasks = \json_decode($fileContent, true);
 
-            foreach($fileTasks as $task) {
+            foreach ($fileTasks as $task) {
                 $this->tasks[$task['id']] = Task::createFromArray($task);
             }
+        }
+    }
+
+    /**
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function searchById(TaskId $taskId): Task
+    {
+        $this->getTasksFromFile();
+        $this->taskIdExists($taskId);
+
+        return $this->tasks[$taskId->value()];
+    }
+
+    /**
+     * @throws TaskNotFound
+     */
+    private function taskIdExists(TaskId $taskId): void
+    {
+        if (!\array_key_exists($taskId->value(), $this->tasks)) {
+            throw TaskNotFound::message($taskId->value());
         }
     }
 }

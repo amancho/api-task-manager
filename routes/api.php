@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskListController;
 
 /*
@@ -21,5 +22,9 @@ Route::group(
             '/',
             [GetTaskListController::class, 'execute']
         )->name('api.tasks.get');
+        Route::get(
+            '/{taskId}',
+            [GetTaskController::class, 'execute']
+        )->name('api.tasks.getById');
     }
 );
