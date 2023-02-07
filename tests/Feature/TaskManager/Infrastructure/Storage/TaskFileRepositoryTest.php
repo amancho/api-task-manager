@@ -109,6 +109,21 @@ final class TaskFileRepositoryTest extends TestCase
         $this->assertEquals($task, $taskSaved);
     }
 
+    public function test_it_delete_task_works(): void
+    {
+        $this->setFile(self::FILE_EMPTY);
+        $newTask = json_encode([
+            'title' => 'New task title',
+            'status' => TaskStatus::done()->value()
+        ]);
+
+        $task = $this->sut->save(Task::createFromJson($newTask));
+        $this->sut->delete($task->id());
+
+        $this->expectException(TaskNotFound::class);
+        $this->sut->searchById($task->id());
+    }
+
 
     private function clearTestFile(): void
     {

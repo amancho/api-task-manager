@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\DeleteTaskController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskListController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\SaveTaskController;
@@ -36,5 +37,9 @@ Route::group(
             '/{taskId}',
             [UpdateTaskController::class, 'execute']
         )->name('api.tasks.update');
+        Route::delete(
+            '/{taskId}',
+            [DeleteTaskController::class, 'execute']
+        )->name('api.tasks.delete');
     }
 );

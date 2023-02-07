@@ -37,4 +37,10 @@ interface TaskRepository
      * @throws TaskNotFound
      */
     public function update(Task $task): Task;
+
+    /**
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function delete(TaskId $taskId): void;
 }

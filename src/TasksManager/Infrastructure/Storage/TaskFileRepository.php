@@ -132,4 +132,18 @@ final class TaskFileRepository implements TaskRepository
 
         return $task;
     }
+
+    /**
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function delete(TaskId $taskId): void
+    {
+        $this->getTasksFromFile();
+        $this->taskIdExists($taskId);
+
+        unset($this->tasks[$taskId->value()]);
+
+        $this->persist();
+    }
 }
