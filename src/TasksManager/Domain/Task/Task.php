@@ -2,6 +2,7 @@
 
 namespace Tappx\Tasks\TasksManager\Domain\Task;
 
+use Tappx\Tasks\TasksManager\Domain\Task\Error\RequiredFieldError;
 use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskCreatedAt;
 use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskId;
 use Tappx\Tasks\TasksManager\Domain\Task\ValueObject\TaskStatus;
@@ -35,6 +36,45 @@ final class Task
     ): Task
     {
         return new self($taskId, $taskTitle, $taskStatus, $taskCreatedAt, $taskUpdatedAt);
+    }
+
+    /**
+     * @throws RequiredFieldError
+     */
+    public static function createFromJson(string $task): Task
+    {
+        $taskDecoded = \json_decode($task, true);
+
+        if (self::isValid($task)) {
+            if (empty($taskDecoded[self::FIELD_ID])) {
+                $taskDecoded[self::FIELD_ID] = uniqid();
+            }
+
+            $taskDecoded[self::FIELD_CREATED_AT] = TaskCreatedAt::create()->value();
+        }
+
+        return self::createFromArray($taskDecoded);
+    }
+
+    /**
+     * @throws RequiredFieldError
+     */
+    private static function isValid(string $task): bool
+    {
+        $taskDecoded = \json_decode($task, true);
+        $requiredFields = [self::FIELD_TITLE, self::FIELD_STATUS];
+
+        foreach ($requiredFields as $requiredField) {
+            if (!\array_key_exists($requiredField, $taskDecoded)) {
+                throw RequiredFieldError::message($requiredField);
+            }
+        }
+
+        if (!TaskStatus::isValid($taskDecoded[self::FIELD_STATUS])) {
+            throw RequiredFieldError::message(self::FIELD_STATUS);
+        }
+
+        return true;
     }
 
     public static function createFromArray(array $task): Task

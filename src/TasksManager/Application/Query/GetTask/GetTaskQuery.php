@@ -11,7 +11,6 @@ final class GetTaskQuery
 {
     public function __construct(private readonly TaskRepository $taskRepository)
     {
-
     }
 
     /**

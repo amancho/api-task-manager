@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskListController;
+use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\SaveTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,10 @@ Route::group(
             '/',
             [GetTaskListController::class, 'execute']
         )->name('api.tasks.get');
+        Route::post(
+            '/',
+            [SaveTaskController::class, 'execute']
+        )->name('api.tasks.save');
         Route::get(
             '/{taskId}',
             [GetTaskController::class, 'execute']
