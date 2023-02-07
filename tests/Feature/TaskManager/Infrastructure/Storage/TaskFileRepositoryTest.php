@@ -93,6 +93,23 @@ final class TaskFileRepositoryTest extends TestCase
         $this->sut->save($task);
     }
 
+    public function test_it_update_task_works(): void
+    {
+        $this->setFile(self::FILE_EMPTY);
+        $newTask = json_encode([
+            'title' => 'New task title',
+            'status' => TaskStatus::done()->value()
+        ]);
+
+        $task = $this->sut->save(Task::createFromJson($newTask));
+
+        $taskSaved = $this->sut->searchById($task->id());
+
+        $this->assertInstanceOf(Task::class, $taskSaved);
+        $this->assertEquals($task, $taskSaved);
+    }
+
+
     private function clearTestFile(): void
     {
         \file_put_contents(self::TEST_PATH . self::FILE_EMPTY, '');

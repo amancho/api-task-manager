@@ -30,4 +30,11 @@ interface TaskRepository
      * @throws TaskIdDuplicated
      */
     public function save(Task $task): Task;
+
+    /**
+     * @throws RequiredFieldError
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function update(Task $task): Task;
 }

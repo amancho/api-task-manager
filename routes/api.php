@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\GetTaskListController;
 use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\SaveTaskController;
+use Tappx\Tasks\TasksManager\Infrastructure\Http\Api\UpdateTaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,9 @@ Route::group(
             '/{taskId}',
             [GetTaskController::class, 'execute']
         )->name('api.tasks.getById');
+        Route::put(
+            '/{taskId}',
+            [UpdateTaskController::class, 'execute']
+        )->name('api.tasks.update');
     }
 );

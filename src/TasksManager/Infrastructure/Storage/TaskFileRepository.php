@@ -116,4 +116,20 @@ final class TaskFileRepository implements TaskRepository
 
         \file_put_contents($this->filePath, \json_encode($tasksToPersist));
     }
+
+    /**
+     * @throws FileNotFound
+     * @throws TaskNotFound
+     */
+    public function update(Task $task): Task
+    {
+        $this->getTasksFromFile();
+        $this->taskIdExists($task->id());
+
+        $this->tasks[$task->id()->value()] = $task;
+
+        $this->persist();
+
+        return $task;
+    }
 }
